@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+
+  /* Minimal Vibrant Palette */
+  --color-min-bg: #F8FAFC; /* Slate 50 */
+  --color-min-text: #1E293B; /* Slate 800 */
+  --color-min-muted: #64748B; /* Slate 500 */
+  
+  /* Vibrant Accents */
+  --color-min-primary: #6366F1; /* Indigo 500 */
+  --color-min-secondary: #06B6D4; /* Cyan 500 */
+  --color-min-accent: #F59E0B; /* Amber 500 */
+  --color-min-success: #10B981; /* Emerald 500 */
+  --color-min-danger: #EF4444; /* Red 500 */
+  --color-min-purple: #8B5CF6; /* Violet 500 */
+  --color-min-pink: #EC4899; /* Pink 500 */
+  
+  --shadow-min-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-min: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-min-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-min-bg);
+  color: var(--color-min-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+@layer utilities {
+  .min-card {
+    background: white;
+    border-radius: 1.5rem; /* rounded-3xl */
+    border: 1px solid #F1F5F9;
+    box-shadow: var(--shadow-min-sm);
+    transition: all 0.2s ease;
+  }
+
+  .min-card:hover {
+    box-shadow: var(--shadow-min);
+    transform: translateY(-2px);
+  }
+
+  .min-btn {
+    border-radius: 9999px; /* rounded-full */
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+
+  .min-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  .min-btn:active {
+    transform: translateY(0);
+  }
+  
+  .min-input {
+    background: #F8FAFC;
+    border: 1px solid transparent;
+    border-radius: 1rem;
+    transition: all 0.2s ease;
+  }
+  
+  .min-input:focus {
+    background: white;
+    border-color: var(--color-min-primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  }
+}
