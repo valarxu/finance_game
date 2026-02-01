@@ -41,6 +41,15 @@ model Asset {
   amount    Float
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  history   AssetHistory[]
+}
+
+model AssetHistory {
+  id        Int      @id @default(autoincrement())
+  amount    Float
+  date      DateTime @default(now())
+  assetId   Int
+  asset     Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
 }
 
 model Liability {
@@ -50,4 +59,13 @@ model Liability {
   interestRate Float    @default(0)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  history      LiabilityHistory[]
+}
+
+model LiabilityHistory {
+  id          Int       @id @default(autoincrement())
+  amount      Float
+  date        DateTime  @default(now())
+  liabilityId Int
+  liability   Liability @relation(fields: [liabilityId], references: [id], onDelete: Cascade)
 }

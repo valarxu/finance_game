@@ -12,3 +12,16 @@ services:
     volumes:
       - ./data:/app/data
     restart: unless-stopped
+
+  migrate:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+      target: builder
+    environment:
+      - DATABASE_URL=file:/app/data/dev.db
+    volumes:
+      - ./data:/app/data
+    command: npx prisma migrate deploy
+    profiles:
+      - tools

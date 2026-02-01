@@ -100,14 +100,24 @@ export async function getDailyExpenses(date: Date) {
 
 // --- Asset & Liability ---
 export async function addAsset(name: string, amount: number) {
-  await prisma.asset.create({ data: { name, amount } })
+  await prisma.$transaction(async (tx) => {
+    const asset = await tx.asset.create({ data: { name, amount } })
+    await tx.assetHistory.create({
+      data: { assetId: asset.id, amount: asset.amount }
+    })
+  })
   revalidatePath('/')
 }
 
 export async function updateAsset(id: number, name: string, amount: number) {
-  await prisma.asset.update({
-    where: { id },
-    data: { name, amount },
+  await prisma.$transaction(async (tx) => {
+    const asset = await tx.asset.update({
+      where: { id },
+      data: { name, amount },
+    })
+    await tx.assetHistory.create({
+      data: { assetId: asset.id, amount: asset.amount }
+    })
   })
   revalidatePath('/')
 }
@@ -122,14 +132,24 @@ export async function getAssets() {
 }
 
 export async function addLiability(name: string, amount: number, interestRate: number) {
-  await prisma.liability.create({ data: { name, amount, interestRate } })
+  await prisma.$transaction(async (tx) => {
+    const liability = await tx.liability.create({ data: { name, amount, interestRate } })
+    await tx.liabilityHistory.create({
+      data: { liabilityId: liability.id, amount: liability.amount }
+    })
+  })
   revalidatePath('/')
 }
 
 export async function updateLiability(id: number, name: string, amount: number, interestRate: number) {
-  await prisma.liability.update({
-    where: { id },
-    data: { name, amount, interestRate },
+  await prisma.$transaction(async (tx) => {
+    const liability = await tx.liability.update({
+      where: { id },
+      data: { name, amount, interestRate },
+    })
+    await tx.liabilityHistory.create({
+      data: { liabilityId: liability.id, amount: liability.amount }
+    })
   })
   revalidatePath('/')
 }
