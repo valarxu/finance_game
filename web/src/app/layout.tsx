@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Inter } from "next/font/google";
 import "./globals.css";
 
@@ -13,9 +13,22 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false, // Essential for 'app-like' feel on iOS
+};
+
 export const metadata: Metadata = {
-  title: "Vibrant Finance",
+  title: "Finance Game",
   description: "Minimalist Personal Finance Tracker",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent", // Makes status bar transparent/overlay
+    title: "Finance Game",
+  },
 };
 
 export default function RootLayout({
