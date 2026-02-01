@@ -7,27 +7,15 @@ echo "Starting update process..."
 
 # 2. Build the services
 echo "Building Docker images..."
-if command -v docker-compose &> /dev/null; then
-    docker-compose build web
-else
-    docker compose build web
-fi
+docker compose build web
 
 # 3. Run database migrations
 # This uses the 'migrate' service defined in docker-compose.yml which has the prisma CLI
 echo "Running database migrations..."
-if command -v docker-compose &> /dev/null; then
-    docker-compose run --rm migrate
-else
-    docker compose run --rm migrate
-fi
+docker compose run --rm migrate
 
 # 4. Restart the web service
 echo "Restarting web service..."
-if command -v docker-compose &> /dev/null; then
-    docker-compose up -d web
-else
-    docker compose up -d web
-fi
+docker compose up -d web
 
 echo "Update completed! Database has been migrated and service restarted."
