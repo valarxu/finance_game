@@ -17,6 +17,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Generate Prisma Client
+# We need to set a dummy DATABASE_URL here because prisma generate expects it to be present
+# even if it's not connecting to the DB during generation.
+ENV DATABASE_URL="file:/tmp/dev.db"
 RUN npx prisma generate
 
 # Next.js collects completely anonymous telemetry data about general usage.
