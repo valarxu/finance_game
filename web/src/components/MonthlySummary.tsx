@@ -263,6 +263,14 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
             const isToday = isSameDay(day, new Date())
             const isSelected = selectedDay && isSameDay(day, selectedDay)
             
+            const dayExpenses = expenses.filter(
+              (e) => isSameDay(new Date(e.date), day) && e.categoryL2 === 'Flexible'
+            )
+            const totalSpent = dayExpenses.reduce((sum, e) => sum + e.amount, 0)
+            const balance = dailyFlexibleLimit - totalSpent
+            // Show balance for past days and today
+            const showBalance = day < new Date()
+
             return (
               <motion.button
                 key={day.toISOString()}
@@ -278,6 +286,11 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
                 `}
               >
                 <span>{format(day, 'd')}</span>
+                {showBalance && (
+                   <span className="text-[10px] leading-none mt-0.5 opacity-80">
+                     {balance > 0 ? '+' : ''}{balance.toFixed(0)}
+                   </span>
+                )}
                 {isToday && <div className="w-1.5 h-1.5 bg-min-primary rounded-full mt-1" />}
               </motion.button>
             )

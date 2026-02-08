@@ -45,18 +45,29 @@ export default async function Home({ searchParams }: Props) {
   // Filter today's flexible expenses (only if viewing current month)
   const isCurrentMonth = currentMonth === format(today, 'yyyy-MM')
   const todayStr = format(today, 'yyyy-MM-dd')
-  
+
+  // Calculate dynamic daily budget
+  const totalFlexibleSpent = expenses
+    .filter(e => e.categoryL2 === 'Flexible')
+    .reduce((sum, e) => sum + e.amount, 0)
+    
   const todayFlexibleSpent = expenses
     .filter(e => 
       format(e.date, 'yyyy-MM-dd') === todayStr && 
       e.categoryL2 === 'Flexible'
     )
     .reduce((sum, e) => sum + e.amount, 0)
+
+  const pastFlexibleSpent = totalFlexibleSpent - todayFlexibleSpent
+  const remainingTotalBudget = (budget?.flexibleBudget || 0) - pastFlexibleSpent
+  const currentDay = today.getDate()
+  // Ensure we don't divide by zero or negative if something is weird, though 1 is min
+  const remainingDays = Math.max(1, daysInMonth - currentDay + 1)
+  const dynamicDailyBudget = remainingTotalBudget / remainingDays
     
   const remainingDailyBudget = isCurrentMonth 
-    ? Math.max(0, dailyFlexibleBudget - todayFlexibleSpent)
-    : 0 // Or strictly speaking, daily budget doesn't make sense for past/future months in the same way, but let's keep it simple or maybe hide DailyAction for non-current months?
-        // Actually, for past months, "Daily Budget" isn't very useful. But let's leave it as is for now, maybe just 0.
+    ? dynamicDailyBudget - todayFlexibleSpent
+    : 0
 
   return (
     <main className="min-h-screen p-4 md:p-8 max-w-7xl mx-auto space-y-12 pb-24 relative">
