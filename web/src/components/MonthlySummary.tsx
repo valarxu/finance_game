@@ -2,12 +2,12 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { setBudget, addIncome } from '@/actions/finance'
+import { setBudget } from '@/actions/finance'
 import { MinimalCard, MinimalButton } from './ui/MinimalComponents'
 import { format, getDaysInMonth, startOfMonth, addDays, isSameDay, parseISO } from 'date-fns'
 import { zhCN } from 'date-fns/locale'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, Settings, TrendingUp, Calendar as CalendarIcon, Wallet, Shield, Sword } from 'lucide-react'
+import { Settings, TrendingUp, Calendar as CalendarIcon, Wallet, Shield, Sword } from 'lucide-react'
 
 interface MonthlySummaryProps {
   month: string // YYYY-MM
@@ -18,35 +18,17 @@ interface MonthlySummaryProps {
 
 export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySummaryProps) {
   const [showSettings, setShowSettings] = useState(false)
-  const [showIncomeForm, setShowIncomeForm] = useState(false)
   const [selectedDay, setSelectedDay] = useState<Date | null>(null)
 
   // Budget Form State
   const [fixedBudget, setFixedBudget] = useState(budget?.fixedBudget || 0)
   const [flexibleBudget, setFlexibleBudget] = useState(budget?.flexibleBudget || 0)
 
-  // Income Form State
-  const [incomeAmount, setIncomeAmount] = useState('')
-  const [incomeDesc, setIncomeDesc] = useState('')
-
   const router = useRouter()
 
   const handleSaveBudget = async () => {
     await setBudget(month, Number(fixedBudget), Number(flexibleBudget))
     setShowSettings(false)
-    router.refresh()
-  }
-
-  const handleAddIncome = async () => {
-    if (!incomeAmount) return
-    await addIncome({
-      amount: parseFloat(incomeAmount),
-      date: new Date(), // Defaults to today, could be month-based
-      description: incomeDesc,
-    })
-    setIncomeAmount('')
-    setIncomeDesc('')
-    setShowIncomeForm(false)
     router.refresh()
   }
 
@@ -134,13 +116,6 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
              <Settings size={20} className="mb-1" />
              <span className="text-xs font-bold">配置</span>
            </button>
-           <button 
-             onClick={() => setShowIncomeForm(true)}
-             className="flex-1 bg-white border border-gray-200 rounded-2xl flex flex-col items-center justify-center text-min-muted hover:text-min-success hover:border-min-success transition-colors"
-           >
-             <Plus size={20} className="mb-1" />
-             <span className="text-xs font-bold">收入</span>
-           </button>
         </div>
       </div>
 
@@ -208,40 +183,6 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
                 <div className="flex gap-2 mt-6">
                   <MinimalButton variant="ghost" onClick={() => setShowSettings(false)} className="flex-1">取消</MinimalButton>
                   <MinimalButton onClick={handleSaveBudget} className="flex-1">保存更改</MinimalButton>
-                </div>
-              </div>
-           </MinimalCard>
-        </div>
-      )}
-
-      {showIncomeForm && (
-        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-           <MinimalCard className="w-full max-w-md shadow-2xl">
-              <h3 className="text-xl font-bold mb-4">添加收入</h3>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-xs font-bold text-min-muted uppercase">金额</label>
-                  <input
-                    type="number"
-                    value={incomeAmount}
-                    onChange={(e) => setIncomeAmount(e.target.value)}
-                    className="min-input w-full p-3 mt-1"
-                    placeholder="0.00"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs font-bold text-min-muted uppercase">来源</label>
-                  <input
-                    type="text"
-                    value={incomeDesc}
-                    onChange={(e) => setIncomeDesc(e.target.value)}
-                    className="min-input w-full p-3 mt-1"
-                    placeholder="例如：工资"
-                  />
-                </div>
-                <div className="flex gap-2 mt-6">
-                  <MinimalButton variant="ghost" onClick={() => setShowIncomeForm(false)} className="flex-1">取消</MinimalButton>
-                  <MinimalButton variant="success" onClick={handleAddIncome} className="flex-1">添加收入</MinimalButton>
                 </div>
               </div>
            </MinimalCard>

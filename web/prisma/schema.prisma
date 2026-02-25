@@ -16,6 +16,8 @@ model Income {
   date        DateTime // The date of income
   description String?
   createdAt   DateTime @default(now())
+  assetId     Int?
+  asset       Asset?   @relation(fields: [assetId], references: [id])
 }
 
 model Budget {
@@ -26,40 +28,47 @@ model Budget {
 }
 
 model Expense {
-  id          Int      @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   amount      Float
   date        DateTime // The date of expense
   description String?
-  categoryL1  String   // Survival, Social, Enjoyment, Development
-  categoryL2  String   // Fixed, Flexible
-  createdAt   DateTime @default(now())
+  categoryL1  String // Survival, Social, Enjoyment, Development
+  categoryL2  String // Fixed, Flexible
+  createdAt   DateTime   @default(now())
+  assetId     Int?
+  asset       Asset?     @relation(fields: [assetId], references: [id])
+  liabilityId Int?
+  liability   Liability? @relation(fields: [liabilityId], references: [id])
 }
 
 model Asset {
-  id        Int      @id @default(autoincrement())
+  id        Int            @id @default(autoincrement())
   name      String
   amount    Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
   history   AssetHistory[]
+  incomes   Income[]
+  expenses  Expense[]
 }
 
 model AssetHistory {
-  id        Int      @id @default(autoincrement())
-  amount    Float
-  date      DateTime @default(now())
-  assetId   Int
-  asset     Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  id      Int      @id @default(autoincrement())
+  amount  Float
+  date    DateTime @default(now())
+  assetId Int
+  asset   Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
 }
 
 model Liability {
-  id           Int      @id @default(autoincrement())
+  id           Int                @id @default(autoincrement())
   name         String
   amount       Float
-  interestRate Float    @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  interestRate Float              @default(0)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
   history      LiabilityHistory[]
+  expenses     Expense[]
 }
 
 model LiabilityHistory {

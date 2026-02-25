@@ -90,7 +90,12 @@ export default async function Home({ searchParams }: Props) {
       */}
       {isCurrentMonth && (
         <section className="max-w-md mx-auto relative z-10">
-          <DailyAction dailyBudget={remainingDailyBudget} month={currentMonth} />
+          <DailyAction 
+            dailyBudget={remainingDailyBudget} 
+            month={currentMonth} 
+            assets={assets} 
+            liabilities={liabilities} 
+          />
         </section>
       )}
 
