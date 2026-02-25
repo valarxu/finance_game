@@ -64,7 +64,7 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
   }
 
   const handleDeleteAsset = async (id: number) => {
-    if (confirm('Are you sure you want to delete this asset?')) {
+    if (confirm('确定要删除这个资产吗？')) {
       await deleteAsset(id)
       router.refresh()
     }
@@ -114,7 +114,7 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
   }
 
   const handleDeleteLiability = async (id: number) => {
-    if (confirm('Are you sure you want to delete this liability?')) {
+    if (confirm('确定要删除这个负债吗？')) {
       await deleteLiability(id)
       router.refresh()
     }
@@ -128,7 +128,7 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
         <div className="absolute top-0 left-0 w-32 h-32 bg-min-primary/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-0 w-48 h-48 bg-min-secondary/5 rounded-full blur-3xl" />
 
-        <h2 className="text-min-muted font-bold text-sm uppercase tracking-widest mb-4">Total Score (Net Worth)</h2>
+        <h2 className="text-min-muted font-bold text-sm uppercase tracking-widest mb-4">总评分 (净值)</h2>
         
         <motion.div 
           key={netWorth}
@@ -144,11 +144,11 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
         }`}>
           {netWorth > 0 ? (
             <>
-              <TrendingUp size={16} /> Status: Legendary
+              <TrendingUp size={16} /> 状态：传说
             </>
           ) : (
             <>
-              <TrendingDown size={16} /> Status: Rookie
+              <TrendingDown size={16} /> 状态：新手
             </>
           )}
         </div>
@@ -162,7 +162,7 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
               <div className="p-2 bg-green-50 rounded-lg text-min-success">
                 <PiggyBank size={20} />
               </div>
-              Power-ups (Assets)
+              强化道具 (资产)
             </h3>
             <span className="font-bold text-min-success text-lg">¥{totalAssets.toLocaleString()}</span>
           </div>
@@ -172,7 +172,7 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
               onClick={openAddAsset}
               className="w-full mb-4 py-3 border border-dashed border-gray-200 rounded-2xl text-min-muted font-bold hover:border-min-success hover:text-min-success hover:bg-green-50/50 transition-all flex items-center justify-center gap-2"
             >
-              <Plus size={20} /> Add Power-up
+              <Plus size={20} /> 添加资产
             </button>
 
             <AnimatePresence>
@@ -186,27 +186,27 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
                   <button onClick={() => setShowAssetForm(false)} className="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
                     <X size={16} />
                   </button>
-                  <h4 className="text-sm font-bold text-min-text mb-2">{editingAssetId ? 'Edit Asset' : 'New Asset'}</h4>
+                  <h4 className="text-sm font-bold text-min-text mb-2">{editingAssetId ? '编辑资产' : '新资产'}</h4>
                   <input
-                    placeholder="Asset Name"
+                    placeholder="资产名称"
                     value={assetName}
                     onChange={e => setAssetName(e.target.value)}
                     className="min-input w-full p-3 text-sm font-medium"
                   />
                   <input
                     type="number"
-                    placeholder="Value"
+                    placeholder="价值"
                     value={assetAmount}
                     onChange={e => setAssetAmount(e.target.value)}
                     className="min-input w-full p-3 text-sm font-bold"
                   />
                   <MinimalButton variant="success" size="sm" onClick={handleSaveAsset} className="w-full mt-2">
-                    {editingAssetId ? 'Update Asset' : 'Save Asset'}
+                    {editingAssetId ? '更新资产' : '保存资产'}
                   </MinimalButton>
                 </motion.div>
               )}
             </AnimatePresence>
-
+            
             <div className="space-y-3">
               {assets.map((asset) => (
                 <div key={asset.id} className="group flex justify-between items-center p-4 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-all">
@@ -238,7 +238,7 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
               <div className="p-2 bg-red-50 rounded-lg text-min-danger">
                 <Wallet size={20} />
               </div>
-              Debuffs (Liabilities)
+              负面状态 (负债)
             </h3>
             <span className="font-bold text-min-danger text-lg">¥{totalLiabilities.toLocaleString()}</span>
           </div>
@@ -248,7 +248,7 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
               onClick={openAddLiability}
               className="w-full mb-4 py-3 border border-dashed border-gray-200 rounded-2xl text-min-muted font-bold hover:border-min-danger hover:text-min-danger hover:bg-red-50/50 transition-all flex items-center justify-center gap-2"
             >
-              <Plus size={20} /> Add Debuff
+              <Plus size={20} /> 添加负债
             </button>
 
             <AnimatePresence>
@@ -262,29 +262,29 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
                   <button onClick={() => setShowLiabilityForm(false)} className="absolute top-2 right-2 text-gray-400 hover:text-gray-600">
                     <X size={16} />
                   </button>
-                  <h4 className="text-sm font-bold text-min-text mb-2">{editingLiabilityId ? 'Edit Debt' : 'New Debt'}</h4>
+                  <h4 className="text-sm font-bold text-min-text mb-2">{editingLiabilityId ? '编辑债务' : '新债务'}</h4>
                   <input
-                    placeholder="Debt Name"
+                    placeholder="债务名称"
                     value={liabilityName}
                     onChange={e => setLiabilityName(e.target.value)}
                     className="min-input w-full p-3 text-sm font-medium"
                   />
                   <input
                     type="number"
-                    placeholder="Amount"
+                    placeholder="金额"
                     value={liabilityAmount}
                     onChange={e => setLiabilityAmount(e.target.value)}
                     className="min-input w-full p-3 text-sm font-bold"
                   />
                   <input
                     type="number"
-                    placeholder="Interest Rate %"
+                    placeholder="利率 %"
                     value={liabilityRate}
                     onChange={e => setLiabilityRate(e.target.value)}
                     className="min-input w-full p-3 text-sm font-medium"
                   />
                   <MinimalButton variant="danger" size="sm" onClick={handleSaveLiability} className="w-full mt-2">
-                    {editingLiabilityId ? 'Update Debt' : 'Save Debt'}
+                    {editingLiabilityId ? '更新债务' : '保存债务'}
                   </MinimalButton>
                 </motion.div>
               )}
@@ -312,7 +312,7 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
                   </div>
                   {liab.interestRate > 0 && (
                     <div className="ml-5 text-xs text-min-muted font-medium bg-gray-100 px-2 py-0.5 rounded-full inline-block">
-                      {liab.interestRate}% Interest
+                      {liab.interestRate}% 利息
                     </div>
                   )}
                 </div>

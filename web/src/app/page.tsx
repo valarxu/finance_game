@@ -3,6 +3,7 @@ import { DailyAction } from '@/components/DailyAction'
 import { MonthlySummary } from '@/components/MonthlySummary'
 import { BalanceSheet } from '@/components/BalanceSheet'
 import { format, addMonths, subMonths, parse } from 'date-fns'
+import { zhCN } from 'date-fns/locale'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 
@@ -74,10 +75,10 @@ export default async function Home({ searchParams }: Props) {
       {/* Header */}
       <header className="text-center space-y-3 mb-12 pt-8">
         <h1 className="text-5xl md:text-6xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-min-primary via-min-purple to-min-pink">
-          Finance Game
+          财富游戏
         </h1>
         <p className="text-min-muted font-medium text-lg">
-          Level up your wealth, one coin at a time. 🎮
+          每一次积累，都是财富的升级。🎮
         </p>
       </header>
 
@@ -98,7 +99,7 @@ export default async function Home({ searchParams }: Props) {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <h2 className="text-2xl font-display font-bold text-min-text">
-              Monthly Quest
+              月度任务
             </h2>
             <div className="h-px bg-gray-200 w-12" />
           </div>
@@ -111,7 +112,7 @@ export default async function Home({ searchParams }: Props) {
               <ChevronLeft className="w-5 h-5" />
             </Link>
             <span className="font-display font-bold text-min-text px-2 min-w-[100px] text-center">
-              {format(dateObj, 'MMM yyyy')}
+              {format(dateObj, 'yyyy年M月', { locale: zhCN })}
             </span>
             <Link 
               href={`/?month=${nextMonth}`}
@@ -133,7 +134,7 @@ export default async function Home({ searchParams }: Props) {
       <section>
         <div className="flex items-center gap-4 mb-6">
           <h2 className="text-2xl font-display font-bold text-min-text">
-            Character Stats
+            角色属性
           </h2>
           <div className="h-px bg-gray-200 flex-1" />
         </div>
@@ -144,7 +145,7 @@ export default async function Home({ searchParams }: Props) {
       </section>
 
       <footer className="text-center text-min-muted text-sm mt-12 pb-8">
-        <p>© 2026 Finance Game • Play to Win</p>
+        <p>© 2026 财富游戏 • 玩转财富</p>
       </footer>
     </main>
   )

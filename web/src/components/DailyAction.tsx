@@ -43,10 +43,10 @@ export function DailyAction({ dailyBudget, month }: DailyActionProps) {
   }
 
   const categories = [
-    { name: 'Survival', icon: Zap, label: 'Survival', color: 'bg-min-danger', text: 'text-min-danger', shadow: 'shadow-min-danger/30' },
-    { name: 'Social', icon: Heart, label: 'Social', color: 'bg-min-accent', text: 'text-min-accent', shadow: 'shadow-min-accent/30' },
-    { name: 'Enjoyment', icon: Smile, label: 'Enjoy', color: 'bg-min-secondary', text: 'text-min-secondary', shadow: 'shadow-min-secondary/30' },
-    { name: 'Development', icon: Coffee, label: 'Growth', color: 'bg-min-success', text: 'text-min-success', shadow: 'shadow-min-success/30' },
+    { name: 'Survival', icon: Zap, label: '生存', color: 'bg-min-danger', text: 'text-min-danger', shadow: 'shadow-min-danger/30' },
+    { name: 'Social', icon: Heart, label: '社交', color: 'bg-min-accent', text: 'text-min-accent', shadow: 'shadow-min-accent/30' },
+    { name: 'Enjoyment', icon: Smile, label: '享受', color: 'bg-min-secondary', text: 'text-min-secondary', shadow: 'shadow-min-secondary/30' },
+    { name: 'Development', icon: Coffee, label: '成长', color: 'bg-min-success', text: 'text-min-success', shadow: 'shadow-min-success/30' },
   ]
 
   return (
@@ -56,13 +56,13 @@ export function DailyAction({ dailyBudget, month }: DailyActionProps) {
 
       <div className="flex justify-between items-end mb-8 relative z-10">
         <div>
-          <h2 className="text-sm font-bold text-min-pink uppercase tracking-wider mb-1">Daily Quest</h2>
+          <h2 className="text-sm font-bold text-min-pink uppercase tracking-wider mb-1">每日任务</h2>
           <div className="text-4xl font-display font-bold text-min-text">
-            Today's Loot
+            今日战利品
           </div>
         </div>
         <div className="text-right">
-          <span className="block text-xs text-min-muted font-bold mb-1">HP (BUDGET)</span>
+          <span className="block text-xs text-min-muted font-bold mb-1">HP (预算)</span>
           <span className="text-3xl font-bold text-min-pink">¥{dailyBudget.toFixed(0)}</span>
         </div>
       </div>
@@ -112,7 +112,7 @@ export function DailyAction({ dailyBudget, month }: DailyActionProps) {
                   : 'text-gray-400 hover:text-gray-600'
               }`}
             >
-              {type === 'Flexible' ? 'Flexible (Fun)' : 'Fixed (Must)'}
+              {type === 'Flexible' ? '灵活 (享乐)' : '固定 (必须)'}
             </button>
           ))}
         </div>
@@ -123,7 +123,7 @@ export function DailyAction({ dailyBudget, month }: DailyActionProps) {
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Add a note..."
+            placeholder="添加备注..."
             className="w-full px-0 py-3 bg-transparent border-b-2 border-gray-100 focus:border-min-pink outline-none text-lg transition-colors placeholder:text-gray-300"
           />
         </div>
@@ -135,7 +135,7 @@ export function DailyAction({ dailyBudget, month }: DailyActionProps) {
           className="w-full bg-min-pink shadow-min-pink/30 hover:bg-pink-600"
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Processing...' : 'Track Expense'} <CreditCard size={18} />
+          {isSubmitting ? '处理中...' : '记一笔'} <CreditCard size={18} />
         </MinimalButton>
       </form>
 
@@ -151,8 +151,8 @@ export function DailyAction({ dailyBudget, month }: DailyActionProps) {
               <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <CheckCircle className="w-10 h-10 text-green-500" />
               </div>
-              <h3 className="text-2xl font-bold text-min-text mb-1">Recorded!</h3>
-              <p className="text-min-muted">Keep up the good habits.</p>
+              <h3 className="text-2xl font-bold text-min-text mb-1">记录成功！</h3>
+              <p className="text-min-muted">保持好习惯。</p>
             </div>
           </motion.div>
         )}

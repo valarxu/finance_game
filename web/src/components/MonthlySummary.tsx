@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { setBudget, addIncome } from '@/actions/finance'
 import { MinimalCard, MinimalButton } from './ui/MinimalComponents'
 import { format, getDaysInMonth, startOfMonth, addDays, isSameDay, parseISO } from 'date-fns'
+import { zhCN } from 'date-fns/locale'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, Settings, TrendingUp, Calendar as CalendarIcon, Wallet, Shield, Sword } from 'lucide-react'
 
@@ -84,6 +85,13 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
     }
   }
 
+  const categoryMap: Record<string, string> = {
+    'Survival': '生存',
+    'Social': '社交',
+    'Enjoyment': '享受',
+    'Development': '成长',
+  }
+
   return (
     <div className="space-y-6">
       {/* Top Stats Row */}
@@ -93,7 +101,7 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
             <Wallet size={24} />
           </div>
           <div>
-            <p className="text-xs font-bold text-min-muted uppercase">Loot Stash</p>
+            <p className="text-xs font-bold text-min-muted uppercase">金币库</p>
             <p className="text-2xl font-bold text-min-text">¥{totalIncome.toLocaleString()}</p>
           </div>
         </MinimalCard>
@@ -103,7 +111,7 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
             <Shield size={24} />
           </div>
           <div>
-            <p className="text-xs font-bold text-min-muted uppercase">Campaign Funds</p>
+            <p className="text-xs font-bold text-min-muted uppercase">战役基金</p>
             <p className="text-2xl font-bold text-min-text">¥{totalBudget.toLocaleString()}</p>
           </div>
         </MinimalCard>
@@ -113,7 +121,7 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
             <Sword size={24} />
           </div>
           <div>
-            <p className="text-xs font-bold text-min-muted uppercase">Quest Spent</p>
+            <p className="text-xs font-bold text-min-muted uppercase">任务消耗</p>
             <p className="text-2xl font-bold text-min-text">¥{(fixedSpent + flexibleSpent).toLocaleString()}</p>
           </div>
         </MinimalCard>
@@ -124,14 +132,14 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
              className="flex-1 bg-white border border-gray-200 rounded-2xl flex flex-col items-center justify-center text-min-muted hover:text-min-primary hover:border-min-primary transition-colors"
            >
              <Settings size={20} className="mb-1" />
-             <span className="text-xs font-bold">Config</span>
+             <span className="text-xs font-bold">配置</span>
            </button>
            <button 
              onClick={() => setShowIncomeForm(true)}
              className="flex-1 bg-white border border-gray-200 rounded-2xl flex flex-col items-center justify-center text-min-muted hover:text-min-success hover:border-min-success transition-colors"
            >
              <Plus size={20} className="mb-1" />
-             <span className="text-xs font-bold">Income</span>
+             <span className="text-xs font-bold">收入</span>
            </button>
         </div>
       </div>
@@ -140,7 +148,7 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <MinimalCard color="secondary">
            <div className="flex justify-between items-center mb-2">
-             <span className="font-bold text-min-secondary flex items-center gap-2"><Shield size={16} /> Rigid Shield (Fixed)</span>
+             <span className="font-bold text-min-secondary flex items-center gap-2"><Shield size={16} /> 坚固护盾 (固定)</span>
              <span className="text-xs font-bold text-min-muted">{((fixedSpent / (budget?.fixedBudget || 1)) * 100).toFixed(0)}%</span>
            </div>
            <div className="h-4 bg-gray-100 rounded-full overflow-hidden">
@@ -150,14 +158,14 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
              />
            </div>
            <div className="flex justify-between mt-1 text-xs text-min-muted font-medium">
-             <span>¥{fixedSpent} used</span>
-             <span>¥{budget?.fixedBudget} max</span>
+             <span>¥{fixedSpent} 已用</span>
+             <span>¥{budget?.fixedBudget} 上限</span>
            </div>
         </MinimalCard>
 
         <MinimalCard color="success">
            <div className="flex justify-between items-center mb-2">
-             <span className="font-bold text-min-success flex items-center gap-2"><Sword size={16} /> Elastic Sword (Flexible)</span>
+             <span className="font-bold text-min-success flex items-center gap-2"><Sword size={16} /> 灵巧利剑 (灵活)</span>
              <span className="text-xs font-bold text-min-muted">{((flexibleSpent / (budget?.flexibleBudget || 1)) * 100).toFixed(0)}%</span>
            </div>
            <div className="h-4 bg-gray-100 rounded-full overflow-hidden">
@@ -167,8 +175,8 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
              />
            </div>
            <div className="flex justify-between mt-1 text-xs text-min-muted font-medium">
-             <span>¥{flexibleSpent} used</span>
-             <span>¥{budget?.flexibleBudget} max</span>
+             <span>¥{flexibleSpent} 已用</span>
+             <span>¥{budget?.flexibleBudget} 上限</span>
            </div>
         </MinimalCard>
       </div>
@@ -177,10 +185,10 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
       {showSettings && (
         <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center p-4">
            <MinimalCard className="w-full max-w-md shadow-2xl">
-              <h3 className="text-xl font-bold mb-4">Budget Configuration</h3>
+              <h3 className="text-xl font-bold mb-4">预算配置</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="text-xs font-bold text-min-muted uppercase">Fixed Budget</label>
+                  <label className="text-xs font-bold text-min-muted uppercase">固定预算</label>
                   <input
                     type="number"
                     value={fixedBudget}
@@ -189,7 +197,7 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-bold text-min-muted uppercase">Flexible Budget</label>
+                  <label className="text-xs font-bold text-min-muted uppercase">灵活预算</label>
                   <input
                     type="number"
                     value={flexibleBudget}
@@ -198,8 +206,8 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
                   />
                 </div>
                 <div className="flex gap-2 mt-6">
-                  <MinimalButton variant="ghost" onClick={() => setShowSettings(false)} className="flex-1">Cancel</MinimalButton>
-                  <MinimalButton onClick={handleSaveBudget} className="flex-1">Save Changes</MinimalButton>
+                  <MinimalButton variant="ghost" onClick={() => setShowSettings(false)} className="flex-1">取消</MinimalButton>
+                  <MinimalButton onClick={handleSaveBudget} className="flex-1">保存更改</MinimalButton>
                 </div>
               </div>
            </MinimalCard>
@@ -209,10 +217,10 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
       {showIncomeForm && (
         <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center p-4">
            <MinimalCard className="w-full max-w-md shadow-2xl">
-              <h3 className="text-xl font-bold mb-4">Add Income</h3>
+              <h3 className="text-xl font-bold mb-4">添加收入</h3>
               <div className="space-y-4">
                 <div>
-                  <label className="text-xs font-bold text-min-muted uppercase">Amount</label>
+                  <label className="text-xs font-bold text-min-muted uppercase">金额</label>
                   <input
                     type="number"
                     value={incomeAmount}
@@ -222,18 +230,18 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-bold text-min-muted uppercase">Source</label>
+                  <label className="text-xs font-bold text-min-muted uppercase">来源</label>
                   <input
                     type="text"
                     value={incomeDesc}
                     onChange={(e) => setIncomeDesc(e.target.value)}
                     className="min-input w-full p-3 mt-1"
-                    placeholder="e.g. Salary"
+                    placeholder="例如：工资"
                   />
                 </div>
                 <div className="flex gap-2 mt-6">
-                  <MinimalButton variant="ghost" onClick={() => setShowIncomeForm(false)} className="flex-1">Cancel</MinimalButton>
-                  <MinimalButton variant="success" onClick={handleAddIncome} className="flex-1">Add Income</MinimalButton>
+                  <MinimalButton variant="ghost" onClick={() => setShowIncomeForm(false)} className="flex-1">取消</MinimalButton>
+                  <MinimalButton variant="success" onClick={handleAddIncome} className="flex-1">添加收入</MinimalButton>
                 </div>
               </div>
            </MinimalCard>
@@ -247,13 +255,13 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
             <CalendarIcon size={24} />
           </div>
           <div>
-            <h2 className="font-bold text-xl text-min-text">Adventure Map</h2>
-            <p className="text-sm text-min-muted">Click a day to view your loot details</p>
+            <h2 className="font-bold text-xl text-min-text">冒险地图</h2>
+            <p className="text-sm text-min-muted">点击日期查看详细战况</p>
           </div>
         </div>
         
         <div className="grid grid-cols-7 gap-3">
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
+          {['日', '一', '二', '三', '四', '五', '六'].map((d) => (
             <div key={d} className="text-center text-xs font-bold text-min-muted mb-2 uppercase tracking-wide">
               {d}
             </div>
@@ -308,17 +316,17 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
             >
               <h4 className="font-bold text-min-text mb-4 flex items-center gap-2">
                 <span className="w-1 h-4 bg-min-primary rounded-full"></span>
-                Activity Log: {format(selectedDay, 'MMM d, yyyy')}
+                活动日志: {format(selectedDay, 'yyyy年M月d日', { locale: zhCN })}
               </h4>
               <div className="space-y-3">
                 {getDayDetails(selectedDay).length === 0 ? (
-                  <p className="text-sm text-min-muted italic pl-3">No activity recorded for this day.</p>
+                  <p className="text-sm text-min-muted italic pl-3">今日无活动记录。</p>
                 ) : (
                   getDayDetails(selectedDay).map((e) => (
                     <div key={e.id} className="flex justify-between items-center p-3 bg-gray-50 rounded-xl hover:bg-white hover:shadow-sm transition-all">
                       <div className="flex items-center gap-3">
                         <div className={`w-2 h-2 rounded-full ${getCategoryColor(e.categoryL1)}`} />
-                        <span className="font-medium text-min-text">{e.description || e.categoryL1}</span>
+                        <span className="font-medium text-min-text">{e.description || categoryMap[e.categoryL1] || e.categoryL1}</span>
                       </div>
                       <span className="font-bold text-min-text">-¥{e.amount}</span>
                     </div>

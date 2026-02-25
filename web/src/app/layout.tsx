@@ -22,12 +22,12 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Finance Game",
-  description: "Minimalist Personal Finance Tracker",
+  title: "财富游戏",
+  description: "极简个人财务追踪器",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent", // Makes status bar transparent/overlay
-    title: "Finance Game",
+    title: "财富游戏",
   },
 };
 
@@ -37,7 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="zh">
       <body
         className={`${dmSans.variable} ${inter.variable} antialiased`}
       >
