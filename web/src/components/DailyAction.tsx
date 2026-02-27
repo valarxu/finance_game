@@ -210,23 +210,28 @@ export function DailyAction({ dailyBudget, month, assets, liabilities }: DailyAc
             <div>
               <label className="block text-xs font-bold text-min-muted mb-2 uppercase">支付账户</label>
               <select
-                value={expenseAccountId}
+                value={expenseAccountId ? `${expenseAccountType}-${expenseAccountId}` : ''}
                 onChange={(e) => {
-                  setExpenseAccountId(e.target.value)
-                  const selectedOption = e.target.selectedOptions[0]
-                  setExpenseAccountType(selectedOption.getAttribute('data-type') as 'Asset' | 'Liability')
+                  const val = e.target.value
+                  if (!val) {
+                    setExpenseAccountId('')
+                    return
+                  }
+                  const [type, id] = val.split('-')
+                  setExpenseAccountId(id)
+                  setExpenseAccountType(type as 'Asset' | 'Liability')
                 }}
                 className="w-full p-3 bg-gray-50 rounded-xl text-min-text font-bold outline-none focus:ring-2 focus:ring-min-pink/20"
               >
                 <option value="">选择账户 (可选)</option>
                 <optgroup label="资产 (余额减少)">
                   {assets.map(a => (
-                    <option key={`asset-${a.id}`} value={a.id} data-type="Asset">{a.name} (¥{a.amount})</option>
+                    <option key={`asset-${a.id}`} value={`Asset-${a.id}`}>{a.name} (¥{a.amount})</option>
                   ))}
                 </optgroup>
                 <optgroup label="负债 (欠款增加)">
                   {liabilities.map(l => (
-                    <option key={`liability-${l.id}`} value={l.id} data-type="Liability">{l.name} (¥{l.amount})</option>
+                    <option key={`liability-${l.id}`} value={`Liability-${l.id}`}>{l.name} (¥{l.amount})</option>
                   ))}
                 </optgroup>
               </select>
@@ -260,23 +265,28 @@ export function DailyAction({ dailyBudget, month, assets, liabilities }: DailyAc
               <div>
                 <label className="block text-xs font-bold text-min-muted mb-2 uppercase">从 (转出)</label>
                 <select
-                  value={fromId}
+                  value={fromId ? `${fromType}-${fromId}` : ''}
                   onChange={(e) => {
-                    setFromId(e.target.value)
-                    const selectedOption = e.target.selectedOptions[0]
-                    setFromType(selectedOption.getAttribute('data-type') as 'Asset' | 'Liability')
+                    const val = e.target.value
+                    if (!val) {
+                      setFromId('')
+                      return
+                    }
+                    const [type, id] = val.split('-')
+                    setFromId(id)
+                    setFromType(type as 'Asset' | 'Liability')
                   }}
                   className="w-full p-3 bg-gray-50 rounded-xl text-min-text font-bold outline-none focus:ring-2 focus:ring-min-pink/20 text-sm"
                 >
                   <option value="">选择账户</option>
                   <optgroup label="资产">
                     {assets.map(a => (
-                      <option key={`asset-${a.id}`} value={a.id} data-type="Asset">{a.name}</option>
+                      <option key={`asset-${a.id}`} value={`Asset-${a.id}`}>{a.name}</option>
                     ))}
                   </optgroup>
                   <optgroup label="负债">
                     {liabilities.map(l => (
-                      <option key={`liability-${l.id}`} value={l.id} data-type="Liability">{l.name}</option>
+                      <option key={`liability-${l.id}`} value={`Liability-${l.id}`}>{l.name}</option>
                     ))}
                   </optgroup>
                 </select>
@@ -284,23 +294,28 @@ export function DailyAction({ dailyBudget, month, assets, liabilities }: DailyAc
               <div>
                 <label className="block text-xs font-bold text-min-muted mb-2 uppercase">到 (转入)</label>
                 <select
-                  value={toId}
+                  value={toId ? `${toType}-${toId}` : ''}
                   onChange={(e) => {
-                    setToId(e.target.value)
-                    const selectedOption = e.target.selectedOptions[0]
-                    setToType(selectedOption.getAttribute('data-type') as 'Asset' | 'Liability')
+                    const val = e.target.value
+                    if (!val) {
+                      setToId('')
+                      return
+                    }
+                    const [type, id] = val.split('-')
+                    setToId(id)
+                    setToType(type as 'Asset' | 'Liability')
                   }}
                   className="w-full p-3 bg-gray-50 rounded-xl text-min-text font-bold outline-none focus:ring-2 focus:ring-min-pink/20 text-sm"
                 >
                   <option value="">选择账户</option>
                   <optgroup label="资产">
                     {assets.map(a => (
-                      <option key={`asset-${a.id}`} value={a.id} data-type="Asset">{a.name}</option>
+                      <option key={`asset-${a.id}`} value={`Asset-${a.id}`}>{a.name}</option>
                     ))}
                   </optgroup>
                   <optgroup label="负债">
                     {liabilities.map(l => (
-                      <option key={`liability-${l.id}`} value={l.id} data-type="Liability">{l.name}</option>
+                      <option key={`liability-${l.id}`} value={`Liability-${l.id}`}>{l.name}</option>
                     ))}
                   </optgroup>
                 </select>
