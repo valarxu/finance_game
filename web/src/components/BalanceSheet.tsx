@@ -128,7 +128,7 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
         <div className="absolute top-0 left-0 w-32 h-32 bg-min-primary/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-0 w-48 h-48 bg-min-secondary/5 rounded-full blur-3xl" />
 
-        <h2 className="text-min-muted font-bold text-sm uppercase tracking-widest mb-4">总评分 (净值)</h2>
+        <h2 className="text-min-muted font-bold text-sm uppercase tracking-widest mb-4">净资产</h2>
         
         <motion.div 
           key={netWorth}
@@ -144,11 +144,11 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
         }`}>
           {netWorth > 0 ? (
             <>
-              <TrendingUp size={16} /> 状态：传说
+              <TrendingUp size={16} /> 状态：财务健康
             </>
           ) : (
             <>
-              <TrendingDown size={16} /> 状态：新手
+              <TrendingDown size={16} /> 状态：需关注
             </>
           )}
         </div>
@@ -162,7 +162,7 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
               <div className="p-2 bg-green-50 rounded-lg text-min-success">
                 <PiggyBank size={20} />
               </div>
-              强化道具 (资产)
+              资产列表
             </h3>
             <span className="font-bold text-min-success text-lg">¥{totalAssets.toLocaleString()}</span>
           </div>
@@ -238,7 +238,7 @@ export function BalanceSheet({ assets, liabilities }: BalanceSheetProps) {
               <div className="p-2 bg-red-50 rounded-lg text-min-danger">
                 <Wallet size={20} />
               </div>
-              负面状态 (负债)
+              负债列表
             </h3>
             <span className="font-bold text-min-danger text-lg">¥{totalLiabilities.toLocaleString()}</span>
           </div>

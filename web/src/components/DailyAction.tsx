@@ -110,10 +110,10 @@ export function DailyAction({ dailyBudget, month, assets, liabilities }: DailyAc
   }
 
   const categories = [
-    { name: 'Survival', icon: Zap, label: '生存', color: 'bg-min-danger', text: 'text-min-danger', shadow: 'shadow-min-danger/30' },
-    { name: 'Social', icon: Heart, label: '社交', color: 'bg-min-accent', text: 'text-min-accent', shadow: 'shadow-min-accent/30' },
-    { name: 'Enjoyment', icon: Smile, label: '享受', color: 'bg-min-secondary', text: 'text-min-secondary', shadow: 'shadow-min-secondary/30' },
-    { name: 'Development', icon: Coffee, label: '成长', color: 'bg-min-success', text: 'text-min-success', shadow: 'shadow-min-success/30' },
+    { name: 'Survival', icon: Zap, label: '基本生活', color: 'bg-min-danger', text: 'text-min-danger', shadow: 'shadow-min-danger/30' },
+    { name: 'Social', icon: Heart, label: '人情往来', color: 'bg-min-accent', text: 'text-min-accent', shadow: 'shadow-min-accent/30' },
+    { name: 'Enjoyment', icon: Smile, label: '休闲娱乐', color: 'bg-min-secondary', text: 'text-min-secondary', shadow: 'shadow-min-secondary/30' },
+    { name: 'Development', icon: Coffee, label: '个人成长', color: 'bg-min-success', text: 'text-min-success', shadow: 'shadow-min-success/30' },
   ]
 
   return (
@@ -125,13 +125,13 @@ export function DailyAction({ dailyBudget, month, assets, liabilities }: DailyAc
       <div className="mb-8 relative z-10">
         <div className="flex justify-between items-end mb-6">
           <div>
-            <h2 className="text-sm font-bold text-min-pink uppercase tracking-wider mb-1">每日任务</h2>
+            <h2 className="text-sm font-bold text-min-pink uppercase tracking-wider mb-1">今日记账</h2>
             <div className="text-4xl font-display font-bold text-min-text">
-              {activeTab === 'expense' ? '今日战利品' : activeTab === 'income' ? '收获满满' : '资产调配'}
+              {activeTab === 'expense' ? '今日支出' : activeTab === 'income' ? '今日收入' : '资产转账'}
             </div>
           </div>
           <div className="text-right">
-            <span className="block text-xs text-min-muted font-bold mb-1">HP (预算)</span>
+            <span className="block text-xs text-min-muted font-bold mb-1">剩余预算</span>
             <span className="text-3xl font-bold text-min-pink">¥{dailyBudget.toFixed(0)}</span>
           </div>
         </div>
@@ -201,7 +201,7 @@ export function DailyAction({ dailyBudget, month, assets, liabilities }: DailyAc
                       : 'text-gray-400 hover:text-gray-600'
                   }`}
                 >
-                  {type === 'Flexible' ? '灵活 (享乐)' : '固定 (必须)'}
+                  {type === 'Flexible' ? '灵活支出' : '固定支出'}
                 </button>
               ))}
             </div>
@@ -345,7 +345,7 @@ export function DailyAction({ dailyBudget, month, assets, liabilities }: DailyAc
               </div>
               <h3 className="text-2xl font-bold text-min-text mb-1">操作成功！</h3>
               <p className="text-min-muted">
-                {activeTab === 'expense' ? '保持好习惯。' : activeTab === 'income' ? '继续加油！' : '资产已更新。'}
+                {activeTab === 'expense' ? '支出已记录。' : activeTab === 'income' ? '收入已记录。' : '转账已完成。'}
               </p>
             </div>
           </motion.div>

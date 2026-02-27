@@ -75,10 +75,10 @@ export default async function Home({ searchParams }: Props) {
       {/* Header */}
       <header className="text-center space-y-3 mb-12 pt-8">
         <h1 className="text-5xl md:text-6xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-min-primary via-min-purple to-min-pink">
-          财富游戏
+          财富概览
         </h1>
         <p className="text-min-muted font-medium text-lg">
-          每一次积累，都是财富的升级。🎮
+          每一笔记录，都是财富的积累。
         </p>
       </header>
 
@@ -104,7 +104,7 @@ export default async function Home({ searchParams }: Props) {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <h2 className="text-2xl font-display font-bold text-min-text">
-              月度任务
+              本月概览
             </h2>
             <div className="h-px bg-gray-200 w-12" />
           </div>
@@ -139,7 +139,7 @@ export default async function Home({ searchParams }: Props) {
       <section>
         <div className="flex items-center gap-4 mb-6">
           <h2 className="text-2xl font-display font-bold text-min-text">
-            角色属性
+            资产负债
           </h2>
           <div className="h-px bg-gray-200 flex-1" />
         </div>
@@ -150,7 +150,7 @@ export default async function Home({ searchParams }: Props) {
       </section>
 
       <footer className="text-center text-min-muted text-sm mt-12 pb-8">
-        <p>© 2026 财富游戏 • 玩转财富</p>
+        <p>© 2026 Finance Track • 个人财务管理</p>
       </footer>
     </main>
   )

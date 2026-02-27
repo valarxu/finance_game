@@ -22,12 +22,12 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "财富游戏",
+  title: "Finance Track",
   description: "极简个人财务追踪器",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent", // Makes status bar transparent/overlay
-    title: "财富游戏",
+    title: "Finance Track",
   },
 };
 

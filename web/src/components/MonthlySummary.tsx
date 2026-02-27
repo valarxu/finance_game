@@ -7,7 +7,7 @@ import { MinimalCard, MinimalButton } from './ui/MinimalComponents'
 import { format, getDaysInMonth, startOfMonth, addDays, isSameDay, parseISO } from 'date-fns'
 import { zhCN } from 'date-fns/locale'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Settings, TrendingUp, Calendar as CalendarIcon, Wallet, Shield, Sword } from 'lucide-react'
+import { Settings, TrendingUp, Calendar as CalendarIcon, Wallet, Target, CreditCard, Building, ShoppingBag } from 'lucide-react'
 
 interface MonthlySummaryProps {
   month: string // YYYY-MM
@@ -68,10 +68,10 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
   }
 
   const categoryMap: Record<string, string> = {
-    'Survival': '生存',
-    'Social': '社交',
-    'Enjoyment': '享受',
-    'Development': '成长',
+    'Survival': '基本生活',
+    'Social': '人情往来',
+    'Enjoyment': '休闲娱乐',
+    'Development': '个人成长',
   }
 
   return (
@@ -83,27 +83,27 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
             <Wallet size={24} />
           </div>
           <div>
-            <p className="text-xs font-bold text-min-muted uppercase">金币库</p>
+            <p className="text-xs font-bold text-min-muted uppercase">本月收入</p>
             <p className="text-2xl font-bold text-min-text">¥{totalIncome.toLocaleString()}</p>
           </div>
         </MinimalCard>
 
         <MinimalCard className="p-4 flex items-center gap-4" color="default">
           <div className="p-3 bg-min-primary/10 rounded-full text-min-primary">
-            <Shield size={24} />
+            <Target size={24} />
           </div>
           <div>
-            <p className="text-xs font-bold text-min-muted uppercase">战役基金</p>
+            <p className="text-xs font-bold text-min-muted uppercase">本月预算</p>
             <p className="text-2xl font-bold text-min-text">¥{totalBudget.toLocaleString()}</p>
           </div>
         </MinimalCard>
 
         <MinimalCard className="p-4 flex items-center gap-4" color="default">
           <div className="p-3 bg-min-secondary/10 rounded-full text-min-secondary">
-            <Sword size={24} />
+            <CreditCard size={24} />
           </div>
           <div>
-            <p className="text-xs font-bold text-min-muted uppercase">任务消耗</p>
+            <p className="text-xs font-bold text-min-muted uppercase">本月支出</p>
             <p className="text-2xl font-bold text-min-text">¥{(fixedSpent + flexibleSpent).toLocaleString()}</p>
           </div>
         </MinimalCard>
@@ -123,7 +123,7 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <MinimalCard color="secondary">
            <div className="flex justify-between items-center mb-2">
-             <span className="font-bold text-min-secondary flex items-center gap-2"><Shield size={16} /> 坚固护盾 (固定)</span>
+             <span className="font-bold text-min-secondary flex items-center gap-2"><Building size={16} /> 固定支出</span>
              <span className="text-xs font-bold text-min-muted">{((fixedSpent / (budget?.fixedBudget || 1)) * 100).toFixed(0)}%</span>
            </div>
            <div className="h-4 bg-gray-100 rounded-full overflow-hidden">
@@ -140,7 +140,7 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
 
         <MinimalCard color="success">
            <div className="flex justify-between items-center mb-2">
-             <span className="font-bold text-min-success flex items-center gap-2"><Sword size={16} /> 灵巧利剑 (灵活)</span>
+             <span className="font-bold text-min-success flex items-center gap-2"><ShoppingBag size={16} /> 灵活支出</span>
              <span className="text-xs font-bold text-min-muted">{((flexibleSpent / (budget?.flexibleBudget || 1)) * 100).toFixed(0)}%</span>
            </div>
            <div className="h-4 bg-gray-100 rounded-full overflow-hidden">
@@ -196,8 +196,8 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
             <CalendarIcon size={24} />
           </div>
           <div>
-            <h2 className="font-bold text-xl text-min-text">冒险地图</h2>
-            <p className="text-sm text-min-muted">点击日期查看详细战况</p>
+            <h2 className="font-bold text-xl text-min-text">收支日历</h2>
+            <p className="text-sm text-min-muted">点击日期查看收支详情</p>
           </div>
         </div>
         
@@ -257,7 +257,7 @@ export function MonthlySummary({ month, budget, incomes, expenses }: MonthlySumm
             >
               <h4 className="font-bold text-min-text mb-4 flex items-center gap-2">
                 <span className="w-1 h-4 bg-min-primary rounded-full"></span>
-                活动日志: {format(selectedDay, 'yyyy年M月d日', { locale: zhCN })}
+                收支明细: {format(selectedDay, 'yyyy年M月d日', { locale: zhCN })}
               </h4>
               <div className="space-y-3">
                 {getDayDetails(selectedDay).length === 0 ? (
