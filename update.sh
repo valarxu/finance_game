@@ -14,6 +14,14 @@ docker compose build web
 echo "Running database migrations..."
 docker compose run --rm migrate
 
+# 3.5 Fix permissions (Critical for SQLite)
+echo "Fixing permissions for data directory..."
+# The web container runs as user 1001 (nextjs), so we need to ensure it owns the database file
+# Migration might have changed ownership to root
+if [ -d "data" ]; then
+    chown -R 1001:1001 data/
+fi
+
 # 4. Restart the web service
 echo "Restarting web service..."
 docker compose up -d web
